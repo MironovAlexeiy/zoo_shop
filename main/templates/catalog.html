@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+    <div class="pet_name">{% if pet_name %}
+        <h1>Каталог товаров {{ pet_name }}</h1>
+    {% else %}
+        <h1>Каталог товаров</h1>
+     {% endif %}
+          <div class="shop-sort">
+              <form action="{% url 'main:sort_catalog'  %}" method="get">
+                  <span>Сортировать по:</span>
+                  <select class="form-select" aria-label="select" name="select_sort">
+                    <option value="popular">Популярности</option>
+                    <option value="title">Названию "от А до Я"</option>
+                    <option value="-title">Названию "от Я до А"</option>
+                    <option value="price">Цена по возр.</option>
+                    <option value="-price">Цена по убыв.</option>
+                    <option value="-created">По новизне</option>
+                  </select><button>ok</button></form>
+                </div>
+    </div>
+
+<div class="catalog_page_block">
+    <form action="{% url 'main:filter_brands_types' %}" method="get">
+    <div class="catalog_sorting_block">
+        <div class="sorting_product_type">
+            <div class="product_type_form">
+                <h2>Тип товара</h2>
+                <div class="product_type_radio_group">
+                    {% for typ in product_types %}
+                    <label><div><input name="product_types_form" id="{{ forloop.counter }}" type="radio" value="{{ typ.title }}">{{ typ.title }}</div></label>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="product_brands_form">
+                <h2>Бренд</h2>
+                <input type="text" placeholder="Название бренда">
+                <div class="product_brands_group">
+                    {% for b in brands %}
+                    <label><div><input name="brands_form" type="checkbox" value="{{ b.title }}">{{ b.title }}</div></label>{% endfor %}
+                    <div class="product_brands_button">
+                        <button>Применить фильтры</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></form>
+    <div class="catalog_product_container">
+        <div class="catalog_product_block">
+            {% for prod in page_object %}
+                {% with p=prod  %}
+            <div class="catalog_product_block_item">
+                {% if p.discount %}
+                <div class="item_sales">Акция</div>{% endif %}
+                <img src="{{ p.product_img.first.image.url }}" alt="">
+                <a href="{% url 'main:product_detail' p.slug %}"><p>{{ p.title|truncatechars:40 }}</p></a>
+                        {% with weight=p.product_weight.all %}
+                            {% if weight %}
+                    <div class="prod_choice">
+                        {% for w in weight %}
+                            <form action="{% url 'main:product_list' %}" method="get">
+                            <button>
+                                <span class="select_choice">
+                                <input name="some_weight" type="hidden" value="{{ w.weight }}" class="size_1_option">{{ w.weight }} кг
+                                <input name="some_price" type="hidden" value="{{ w.price_for_weight }}" class="size_1_price">
+                                </span>
+                            </button>
+                            </form>
+                        {% endfor %}
+                    </div>{% endif %}
+                <div class="price_block">
+                    <div class="price_item">
+                        {% if not weight %}
+                            {% if p.discount %}
+                                <p class="price_old">{{ p.price }} BYN</p>
+                                <p class="price_new">{{ p.get_discount_price }} BYN</p>
+                            {% endif %}
+                            {% if not p.discount %}
+                            <p class="price_new">{{ p.price }} BYN</p>{% endif %}
+                        {% else %}
+                            {% if some_price %}
+                                <p class="price_new">{{ some_price }} BYN</p>
+                                {% else %}
+                            <p class="price_new">{{ p.price }} BYN</p>{% endif %}
+
+                        {% endif %}
+                       <form action="{% url 'cart:cart_add' p.id %}" method="post">
+                             <div class="item_basket">
+                                {% csrf_token %}
+                                {{ cart_form.quantity|default:1 }}
+                                 {% if p.product_weight.all %}
+                                 <input type="hidden" name="weight" value="{{ some_weight }}">{% endif %}
+                            <div class="basket_img"></div>
+                                    <button><img src="../static/img/basket_ico.svg" alt="" width="18"></button>
+                            </div></form>
+                    </div>
+                    <a href="{% url 'order:order_one' p.id %}">Купить в 1 клик</a>
+                </div>
+            </div>{% endwith %}{% endwith %}
+            {% empty %}
+            <div class="empty_block">
+                <img src="{% static 'img/empty_cat.svg' %}" alt="">
+                <div class="empty_title"><h3>По вашему запросу ничего не найдено.</h3></div>
+            </div>{% endfor %}
+        </div>
+    </div>
+</div>
+    {% include 'blocks/pagination.html' %}
+{% include 'blocks/slider_popular.html' %}
+    {% include 'blocks/atticles.html' %}
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}корзина{% endblock %}
+
+{% block content %}
+    {% if not cart %}
+    <div class="basket_page_empty">
+        <img src="{% static 'img/cat_empty.svg' %}" alt="">
+        <h2>В корзине нет товаров. Выберите нужные товары в нашем каталоге</h2>
+        <div class="button_basket_page">
+            <a href="{% url 'main:product_list' %}" type="button">Перейти в каталог товаров</a>
+        </div>
+    </div>{% endif %}
+    {% if cart %}
+    <div class="basket_page">
+        <h1>Моя корзина</h1>
+        <div class="basket_info">
+            <div class="basket_info_container">
+                {% for item in cart %}
+                    {% with product=item.product %}
+                <div class="basket_product_info">
+                    <div style="display: flex;">
+                        <div class="basket_product_img">
+                            <img src="{{ product.product_img.first.image.url }}" alt="product_img">
+                        </div>
+                        <div class="basket_product_main_info">
+                            <h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+                            <div class="product_choice">
+                                {% if item.weight %}
+                                <span>{{ item.weight }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basket_product_quantity">
+                        <div class="product_quantity_management">
+                            <div class="product_quantity_management_container">
+                                <div class="quantity_select">
+                                    <div class="quantity_minus">
+                                        <div style="height: 20px;width: 20px; background: #27efa3;">
+                                            <form action="{% url 'cart:cart_remove_one' product.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button class="add_product_basket">-{{ cart_form.quantity }}</button>
+                                            </form></div>
+                                    </div>
+                                    <div class="quantity_count">{{ item.quantity }}</div>
+                                    <div class="quantity_plus">
+                                        <div style="height: 20px; width: 20px;">
+                                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button class="add_product_basket">+{{ cart_form.quantity}}</button>
+                                                <input type="hidden" name="weight" value="{{ some_weight }}">
+                                            </form></div>
+                                    </div>
+                                </div>
+                                <a href="{% url 'cart:cart_remove' product.id %}"><img src="{% static 'img/basket_del.svg' %}" alt="basket_del"></a>
+                            </div>
+                            {% if product.discount %}
+                            <div class="quantity_discont">Акция</div>{% endif %}
+                        </div>
+                    </div>
+                </div>{% endwith %}{% endfor %}
+            </div>
+            <div class="basket_total_price_container">
+                <div class="total_price_block">
+                    <div class="total_price_info">
+                        {% if cart.get_discount %}
+                        <p class="bad_price">{{ cart.get_total_price }}</p>
+                        <p class="good_price">{{ cart.get_discount }} BYN</p>
+                            {% else %}
+                            <p class="good_price">{{ cart.get_total_price }} BYN</p>
+                            {% endif %}
+                    </div>
+                    <p class="total_count_product">{{ cart|length }} товар{{ cart|length|pluralize:"а" }}</p>
+                </div>
+                <div class="basket_delivery">
+                    <img src="{% static 'img/boxIcon.svg' %}" alt="">
+                    <div>
+                        <h3 class="h_3_del">Самовывоз</h3>
+                        <div class="del_adr">
+                            <img src="{% static 'img/whiteNavigationIcon.svg' %}" alt="">
+                            <p>Минск, ул. Чюрлёниса, 6.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'order:order_create' %}"><button class="order_check">Оформить заказ</button></a>
+            </div>
+        </div>
+    </div>{% endif %}
+    {% include 'blocks/slider_popular.html' %}
+    {% include 'blocks/atticles.html' %}
+{% endblock %}

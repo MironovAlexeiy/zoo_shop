@@ -1,0 +1,43 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<div class="container-fluid home-slider slider1" style="background: #f5f4f4">
+{% if pet_name %}
+    <h2 align="center">Популярные товары {{ pet_name }}</h2>
+    {% else %}<h2 align="center">Популярные товары</h2>
+{% endif %}
+      <div class="list_catalog">
+        {% for p in products_popular %}
+    <div class="product_item">
+        {% if p.discount %}<div class="product_item_discont">Акция</div>{% endif %}
+    <img src="{{ p.product_img.first.image.url }}" alt="" class="product_img">
+        <p class="product_title"><a href="{% url 'main:product_detail' p.slug %}">{{ p.title|truncatechars:20 }}</a></p>
+{#        <div class="item_weight">#}
+{#        <span> 12 gramm</span>#}
+{#        </div>#}
+        <div class="item_price_block"></div>
+        <div class="item_price">
+         {% if p.discount %}
+                                <p class="price_old">{{ p.price }} BYN</p>
+                                <p class="price_new">{{ p.get_discount_price }} BYN</p>
+                            {% endif %}
+                            {% if not p.discount %}
+                            <p class="price_new">{{ p.price }} BYN</p>{% endif %}
+            <form action="{% url 'cart:cart_add' p.id %}" method="post">
+            <div class="item_basket">
+                {% csrf_token %}
+            {{ cart_form.quantity|default:1 }}
+            <div class="basket_img"></div>
+            <button><img src="../static/img/basket_ico.svg" alt=""></button>
+            </div></form>
+        </div>
+    <a href="{% url 'order:order_one' p.id %}" class="buy_1">Купить в 1 клик</a>
+
+</div>
+ {% endfor %}
+</div>
+      </div>
+    <div style="text-align: center">
+        <a href="{% url 'main:product_list' %}">
+          <button class="button_catalog">Смотреть больше товаров</button></a>
+        </div>
+

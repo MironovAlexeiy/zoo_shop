@@ -1,0 +1,26 @@
+  <div class="container" style="background: #f5f4f4; max-width: 80%">
+        {% if pet_name %}
+      <h2 class="my-3">Полезные статьи {{ pet_name }}:</h2>
+        {% else %}<h2 class="my-3">Полезные статьи:</h2>
+            {% endif %}
+      <div class="row">
+        {% for art in articles %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+            <img src="{{ art.image.url }}" alt="" class="card-img-top" width="200" height="200">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{% url 'main:article_detail' art.slug %}">{{ art.title|truncatechars:30 }}</a></h4>
+              {{ art.description|safe|truncatechars:70}}
+              <div class="d-flex justify-content-between align-items-center">
+                  <div style="margin-top: 10px;"></div>
+                <small class="text-muted">Время чтения: {{ art.time_read }} мин</small>
+                  <small class="text-muted" style="margin-left: 85px">{{ art.created }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    <div style="text-align: center"><a href="{% url 'main:articles' %}"><button class="button_catalog">Читать больше статей</button></a>
+        </div>
+    </div>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="check_out_order">
+    <div class="check_out_order_block">
+        <h1>Оформление заказа</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form_order.as_div }}
+            <div class="check_out_address">
+                <div>Самовывоз по адресу: Минск, ул. Чюрлёниса, 6.</div>
+                <div>Оплата любым способом при получении</div>
+            </div>
+            <div class="check_out_basket1">
+                <p class="check_out_sum">{{ cart_checkout.get_total_price }} BYN</p>
+                <p class="check_out_items">{{ cart_checkout|length }} товаров</p>
+            </div>
+            <div class="check_out_submit">
+                <button>Оформить</button>
+                <p>Нажимая на кнопку вы даёте согласие на обработку персональных данных</p>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+    {% include 'blocks/footer.html' %}
+{% endblock %}

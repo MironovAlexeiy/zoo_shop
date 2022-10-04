@@ -1,0 +1,74 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+
+<div class="head_main">
+    <div class="info_head1">
+          <span><img src="{% static 'img/navig.png' %}" alt="logo_nav" width="30" height="30">Мясникова</span>
+        <span><img src="{% static 'img/malinovka1.jpg' %}" alt="m_logo" width="30" height="30">Малиновка</span>
+    </div>
+      <div class="info_head2">
+        <span><img src="{% static 'img/clock_ico.png' %}" alt="c_logo" width="30" height="30">Пон.-Пят. 11:00 - 19:00|Суб.-Вос. 12:00 - 17:00</span>
+      </div>
+         <div class="info_head3">
+        <span><img src="{% static 'img/tel_ico.png' %}" alt="tel_logo" width="30" height="30">80293331207
+            <a href="#"><img src="{% static 'img/insta.jpeg' %}"alt="insta_log" width="30" height="30"></a></span>
+      </div>
+        <div class="info_head4">
+        <a href="{% url 'order:call_back' %}">Обратный звонок</a>
+      </div>
+    </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+  <div class="navbar-brand">
+    <img src="{% static 'img/logo2.jpg' %}" width="30" height="30" alt="logo">
+  </div>
+  <div class="navbar-brand">
+    <span>Территория ZOO</span>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto navbar_head">
+      <li class="nav-item active">
+        <a href="{% url 'main:main' %}" class="nav-link">Главная</a>
+      </li>
+        <li class="nav-item ">
+        <a href="{% url 'main:product_list' %}" class="nav-link">Каталог</a>
+      </li>
+      <li class="nav-item ">
+        <a href="http://127.0.0.1:8000/#discount" class="nav-link">Акции</a>
+      </li>
+        <li class="nav-item ">
+        <a href="{% url 'main:articles' %}" class="nav-link">Статьи</a>
+      </li>
+    </ul>
+    <form action="{% url 'main:search' %}" method="get" class="form-inline my-2 my-lg-0 form_search">
+      <input name="q" type="text" class="form-control mr-sm-2" placeholder="Поиск" aria-label="Поиск">
+      <button class="btn btn-outline-success my-2 my-sm-0 mr-2 btn_search" type="submit" >Поиск</button>
+</form>
+  <div class="navbar-brand">
+      <a href="{% url 'cart:cart_detail' %}"><img src="{% static 'img/basket.jpeg' %}" width="40" height="40" alt="logo"> <small class="cart_count">{{ cart|length }}</small></a>
+  </div>
+{#    {% if user.is_authenticated %}#}
+{#    <span class="navbar-text mr-2">{{ user }}</span>#}
+{#    <a href="{% url 'main:logout' %}" class="btn btn-outline-light">Выход</a>#}
+{#      {% else %}#}
+{#    <a href="{% url 'main:sign' %}" class="btn btn-outline-light mr-2">Вход</a>#}
+{#    <a href="{% url 'main:registration' %}" class="btn btn-outline-light mr-2">Регистрация</a>#}
+{#    {% endif %}#}
+  </div>
+</nav>{% load cache %}
+{% cache 60 pet %}
+    <div class="container_pet">
+{% for p in pet_list %}
+    <div class="pets">
+        <a href="{% url 'main:product_pet_list' p.slug %}">
+            <img src="{{ p.img.url }}" alt="pet"></a><strong>{{ p.name }}</strong>
+    </div>
+
+    {% endfor %}
+</div>{% endcache %}
+

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Главная{% endblock %}
+
+
+
+{% block content %}
+
+<div class="block_1">
+    <div class="block_1_1">
+        <div class="block_1_title"><h1>Всё, что нужно вашему питомцу в 9 мин от метро Малиновка</h1>
+        <div class="block_1_desc">
+            <p><b>Более 5000 товаров</b> для животных в наличии</p>
+            <p><b>Вкусные сюрпризы</b> для ваших питомцев в магазине</p>
+        </div>
+             <a href="{% url 'main:product_list' %}"><button class="button_catalog">Выбрать товар</button></a>
+        </div>
+    <div class="block_1_img"><img src="{% static 'img/image1.svg' %}" alt=""></div>
+    </div>
+</div>
+
+{% include 'blocks/slider_popular.html' %}
+
+<div id="discount" class="discount_block">
+    <div class="discount_1" style="background: rgb(255, 215, 157) none repeat scroll 0% 0%;">
+        <div class="discount_title">
+            <p>Скидка 25% на первый заказ любого товара на сумму от 50BYN</p>
+            <a href="{% url 'main:product_list' %}"><button>Перейти к выбору товара</button></a>
+        </div>
+        <div class="discount_image1">
+            <img src="{% static 'img/image_31_1.png' %}" alt="">
+        </div>
+    </div>
+    <div class="discount_2" style="background: rgb(174, 233, 209) none repeat scroll 0% 0%;">
+        <div class="discount_2_title">
+            <p>Получите игрушку в подарок при сумме заказа от 200BYN</p>
+            <a href="{% url 'main:product_list' %}"><button>Перейти к выбору товара</button></a>
+        </div>
+        <div class="discount_2_image">
+            <img src="{% static 'img/image_30_1.png' %}" alt="">
+        </div>
+    </div>
+</div>
+
+{% include 'blocks/slider_new.html' %}
+
+<div class="popularbrand">
+    <div class="containerbrand">
+    <h2>Популярные бренды</h2>
+        <div class="popularbrand_img_block">
+            {% for brand in brands %}
+            <div class="imgbrand">
+                <img src="{{ brand.image.url }}" alt="" class="imagebrand">
+            </div>{% endfor %}
+        </div>
+     <div style="text-align: center"><a href="{% url 'main:product_list' %}"><button class="button_catalog">Смотреть больше брендов</button></a>
+        </div>
+    </div>
+</div>
+<div class="block_comments">
+    <div class="comments">
+        <h2>Отзывы о магазине</h2>
+        <p style="text-align: center"><b>Автор_1</b></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at atque beatae dolor dolorum eaque, eos exercitationem laudantium magnam nostrum officiis pariatur, perferendis quaerat qui quo, sit suscipit tempore voluptatibus?</p>
+        <div class="info_com">
+            <p><img src="{% static 'img/tel_comments.svg' %}" alt=""> 80294561237</p>
+            <p>Питомец: Имя_питомца </p></div>
+        <div style="text-align: center"><a href="{% url 'order:reviewus' %}"><button class="button_catalog">Оставь свой отзыв</button></a>
+        </div>
+    </div>
+</div>
+{% include 'blocks/atticles.html' %}
+<div class="greeting_block">
+    <div class="container_greeting">
+        <div class="greeting">
+            <div class="greeting_wrapper">
+                <h2 class="greeting_wrapper_title">Здравствуйте, счастливый хозяин любимого питомца!</h2>
+                <div class="greeting_wrapper_text">
+                    <p class="wrapper_text">Меня зовут Ирина, 2 года назад моя бесконечная любовь к животным трансформировалась в магазин «Территория ZOO». Место, главная цель которого — забота о полноценной жизни питомцев, здоровой, долгой, радостной и гармоничной. Наш долг — создавать лучшее предложение для ваших домашних любимцев.</p>
+                </div>
+                <div class="wrapper_text_2">
+                    <div class="wrapper_option">
+                        <div class="wrapper_option_title">За 7 минут соберем заказ</div>
+                        <p class="wrapper_option_text">Выбирайте товары на сайте, забирайте в удобное время в нашем магазине. .Уже через 30 минут собранный и упакованный заказ будет ждать вас.</p>
+                    </div>
+                </div>
+                <div class="wrapper_text_2">
+                    <div class="wrapper_option">
+                        <div class="wrapper_option_title">Поможем с выбором товаров</div>
+                        <p class="wrapper_option_text">Задавайте вопросы профессионалам, получайте консультации по кормлению и содержанию питомца.</p>
+                    </div>
+                </div>
+                <div class="wrapper_text_2">
+                    <div class="wrapper_option">
+                        <div class="wrapper_option_title">Поставим товар на заказ!</div>
+                        <p class="wrapper_option_text">Мы работаем с лучшими поставщиками сертифитированного товара для животных. Если нужного Вам товара не будет в наличии мы в кратчайшие сроки договоримся о его поставке и сообщим Вам.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="greeting_image">
+                <img src="{% static 'img/image_33.png' %}" alt="shop_photo" height="540">
+            </div>
+        </div>
+    </div>
+</div>
+   {% include 'blocks/map_contact_block.html' %}
+{% endblock %}

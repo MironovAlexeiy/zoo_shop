@@ -1,0 +1,128 @@
+.list_catalog{
+    margin-left: 300px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    width: 80%;
+
+}
+
+.product_item{
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 270px;
+    padding: 8px;
+    position: relative;
+}
+.product_item_discont{
+    background: #fd5749;
+    border-radius: 2px;
+    color: #fff;
+    font-family: SF Text Regular, serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    left: 8px;
+    line-height: 20px;
+    padding: 0 6px;
+    position: absolute;
+    top: 8px;
+}
+.product_img{
+    cursor: pointer;
+    height: 130px;
+    margin-bottom: 16px;
+    object-fit: contain;
+    width: 254px;
+}
+.product_title{
+    color: #000;
+    cursor: pointer;
+    font-family: SF Display Semibold, serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 130%;
+}
+.item_weight{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 17px;
+    margin-top: 16px;
+    width: 100%;
+}
+.item_weight>span{
+    background: #449da7;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    font-family: SF Text Medium, fantasy;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 6px;
+    margin-right: 4px;
+    padding: 2px 8px;
+}
+.item_price_block{
+    box-sizing: border-box;
+}
+.item_price{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.old_price{
+    font-family: SF Display Bold, serif;
+    font-size: 16px;
+    font-style: normal;
+    text-decoration: line-through;
+    font-weight: 700;
+    line-height: 130%;
+    margin-right: 17px;
+}
+.new_price{
+    font-family: SF Display Bold, serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%;
+    margin-right: 17px;
+}
+.item_basket{
+    align-items: center;
+    background: #fff;
+    border: 1px solid #babfc3;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.05);
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 54px;
+}
+.item_basket>p{
+    margin-right: 5px;
+}
+.basket_img{
+    margin-top: 5px;
+}
+.buy_1{
+    background: #fff;
+    border: 1px solid #00a0ac;
+    border-radius: 6px;
+    color: #202223;
+    font-family: SF Text Medium, serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    height: 36px;
+    line-height: 20px;
+    width: 100%;
+}

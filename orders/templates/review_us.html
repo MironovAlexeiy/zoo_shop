@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Обратный звонок{% endblock %}
+
+{% block content %}
+<div class="check_out_order">
+    <div class="check_out_order_block">
+        <h1>Ваш отзыв</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <div class="check_out_submit">
+                <button>Отправить отзыв</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+    {% include 'blocks/footer.html' %}
+{% endblock %}

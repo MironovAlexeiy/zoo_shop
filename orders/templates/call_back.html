@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Обратный звонок{% endblock %}
+
+{% block content %}
+<div class="check_out_order">
+    <div class="check_out_order_block">
+        <h1>Перезвоним Вам в течение 15 минут</h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <div class="check_out_submit">
+                <button>Отправить</button>
+                <p>Нажимая на кнопку вы даёте согласие на обработку персональных данных</p>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+    {% include 'blocks/footer.html' %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="success_order">
+    <div class="success_info">
+        <img src="{% static 'img/checkmarkCircl.svg' %}" alt="">
+        <div class="success_title">
+            <h3>Заказ поступил в обработку, ожидайте звонка консультанта</h3>
+        </div>
+        <div class="success_address">
+            <div class="success_address_1">
+                <img src="{% static 'img/whiteNavigationIcon.svg' %}" alt="">
+                <p>Минск, ул. Чюрлёниса, 6.</p>
+            </div>
+            <div class="success_address_2">
+                <img src="{% static 'img/metroIcon.svg' %}" alt="">
+                <p>Малиновка</p>
+            </div>
+        </div>
+        <div class="work_time">
+            <img src="{% static 'img/clock_ico.png' %}" alt="">
+            <p>Пон.-Пят. 10:00-21:00</p>
+            <div></div>
+            <p>Суб.-Вос. 10:00-20:00</p>
+        </div>
+        <a class="success_button" href="{% url 'main:articles' %}" type="button">Читать полезные статьи</a>
+    </div>
+    </div>
+
+{% endblock %}

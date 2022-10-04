@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.title }}{% endblock %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<div class="product_page">
+        <div class="product_info">
+            <div class="product_info_title">
+                <h2>{{ product.title }}</h2>
+            </div>
+            <a href="#"><p class="product_info_p">Смотреть все товары бренда {{ product.brand }}</p></a>
+            <div class="product_page_img">
+                <div class="product_image_block">
+                    <div class="product_main_image">
+                        <img src="{{ product.product_img.first.image.url }}" alt="main_image" class="main_image">
+                    </div>
+                    <div class="other_image">
+                        <img src="" alt="other_image1">
+                        <img src="" alt="other_image2">
+                    </div>
+                </div>
+                <div class="product_order_block">
+                {% with weights=product.product_weight.all %}
+                    {% if weights %}
+                    <h3>Варианты фасовки. Выберите удобный вес</h3>
+                    <div>
+                        <div class="product_size">
+                            {% for w in weights %}
+                            <form method="get" class="size_1" action="{% url 'main:product_detail' product.slug %}">
+                                <button>
+                                <input name="some_weight" type="hidden" value="{{ w.weight }}" class="size_1_option">{{ w.weight }} кг<br>
+                                <input name="some_price" type="hidden" value="{{ w.price_for_weight }}" class="size_1_price">{{ w.price_for_weight }} BYN
+                                </button>
+                            </form>{% endfor %}
+                        </div>
+                    {% if product.available_weight %}
+                        <div>
+                            <form action="" method="get">
+                            <h3 class="add_weight">Задайте свой вес: </h3>
+                                <input placeholder="Например 1.2 кг" type="text" class="add_weight_input" name="weight_input">
+                                <button class="add_weight_button">Применить</button>
+                                {% if error %}
+                                    <span>{{ error }}</span>{% endif %}
+                                </form>
+                        </div>{% endif %}
+                    </div>{% endif %}
+                    <div class="order_delivery">
+                        <div class="order_delivery_img">
+                            <img src="{% static 'img/delivery_img.svg' %}" alt="">
+                        </div>
+                        <div>
+                            <h3 class="order_delivery_h3">Самовывоз</h3>
+                            <p class="order_delivery_p">В данный момент товар можно забрать только самовывозом из нашего уютного магазина по адресу:</p>
+                            <div class="order_address">
+                                <div class="order_address_wrapper">
+                                    <img src="{% static 'img/navigadr.svg' %}" alt="">
+                                    <p>Минск, ул. Чюрлёниса, 6.</p>
+                                </div>
+                                <div class="order_address_wrapper1">
+                                    <img src="{% static 'img/metroIcon.svg' %}" alt="">
+                                    <p>Малиновка</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order_payment">
+                        <div>
+                            <h2 class="order_payment_price">
+                                {% if some_price or price_input %}
+                                {{ some_price|default:'' }} {{ price_input }} руб.
+                                {% else %}
+                                    {% if product.discount %}
+                                        {{ product.get_discount_price }}
+                                        {% else %}
+                                {{ product.price }} руб. {% endif %}
+                                {% endif %}
+                            </h2>
+                        <h3>просмотры {{ total_views }}</h3>
+                        </div>
+                    {% if some_weight %}
+                        <p>Общий вес {{ some_weight }} кг</p>{% endif %}
+                    {% if weight_input %}
+                    <p>Общий вес {{ weight_input }} кг</p>{% endif %}
+                    </div>
+                    <form action="{% url 'cart:cart_add' product.id  %}" method="post">
+                    <div class="basket_interface">
+                             {% csrf_token %}
+                            <div class="basket_managment">
+                            <div class="basket_count">{{ cart_product_form.quantity }}</div>
+
+                        </div>
+                        <div class="basketinterface_button">
+                            <div class="button_products">
+                                {% if some_weight %}
+                                <input type="hidden" name="weight" value="{{ some_weight }}">{% endif %}
+                                {% if weight_input %}
+                                <input type="hidden" name="weight_input" value="{{ weight_input }}">
+                                <input type="hidden" name="price_input" value="{{ price_input }}">{% endif %}
+                                <button>Добавить в корзину</button>
+                            </div>
+                        </div>
+                        <div class="buy_one_clik">
+                            <a href="{% url 'order:order_one' product.id %}"><p class="one_click">Купить в 1 клик</p></a>
+                        </div>
+                    </div></form>
+                </div>{% endwith %}
+            </div>
+            <h2 class="product_page_description_title">Описание</h2>
+            <div class="product_description_block">
+                <div class="main_description">
+                    <p><p>{{ product.description }}</p></p>
+                    {% if product.key_features %}
+                    <h3>Ключевые особенности:</h3>
+                    <div>
+                        <ul>
+                            <li>{{ product.key_features|linenumbers }}</li>
+                        </ul>
+                    </div>{% endif %}
+                    <h3>Состав</h3>
+                    <div>
+                        <p>{{ product.compound }}</p>
+                    </div>
+                </div>
+                <div class="main_analys">{% if product.guaranteed_analysis %}
+                    <h3>Гарантированный анализ:</h3>
+                    <div>
+                        <ul>
+                            <li>{{ product.guaranteed_analysis }}</li>
+                        </ul>{% endif %}
+                    </div>{% if product.nutritional_supplements %}
+                    <h3>Пищевые добавки</h3>
+                    <div>
+                        <p>{{ product.nutritional_supplements }}</p>
+                    </div>{% endif %}
+                </div>
+            </div>
+        </div>
+</div>
+    {% include 'blocks/slider_popular.html' %}
+    {% include 'blocks/atticles.html' %}
+{% endblock %}

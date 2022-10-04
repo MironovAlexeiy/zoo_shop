@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="block_one_click">
+    <div class="one_click_order">
+        <h3>Оформление заказа в 1 клик</h3>
+        <div class="one_click_basket">
+            <div style="display: flex">
+                <div style="height: 56px; width: 56px;">
+                    <img src="{{ product_one.product_img.first.image.url }}" alt="" style="height: 100%; object-fit: cover; width: 100%;">
+                </div>
+                <div class="one_click_product_info">
+                    <h3>{{ product_one.title }}</h3>
+                    <div class="product_one_height">
+                        <span class="height_1">25 gramm</span>
+                        <span class="height_2">50 gramm</span>
+                    </div>
+                    <a href="">GEt your weight</a>
+                </div>
+            </div>
+            <div class="one_product_quantity">
+                <div class="quantity_one">
+                    <div class="quantity_select_one">
+                         <form action=""  method="post">
+                        <div class="quantity_container">
+{#                            <div class="product_one_minus">-</div>#}
+                            <div class="product_one_count"><input name="quantity_one" type="number" min="1" value="1"></div>
+{#                            <div class="product_one_plus">+</div>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="product_one_price_block">
+                    <p class="old_price_one">{{ product_one.price }}</p>
+                    <p class="one_price_discount">{{ product_one.price }}</p>
+                </div>
+            </div>
+        </div>
+        <p class="one_click_info">Заполните данные и нажмите кнопку «Оформить заказ». Товар будет ждать вас по адресу: Минск, ул. Чюрлёниса, 6.</p>
+
+            <div class="form_info_one">
+                {% csrf_token %}
+                {{ form_order.as_div }}
+            </div>
+            <div class="one_click_button">
+                <button>Оформить заказ</button>
+            </div>
+        </form>
+        <p class="one_clik_personal">Нажимая на кнопку вы даёте согласие на обработку персональных данных</p>
+    </div>
+</div>
+
+
+{% endblock %}
+

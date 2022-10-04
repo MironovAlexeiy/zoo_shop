@@ -1,0 +1,51 @@
+{% load static %}
+<div class="footer_block">
+    <div class="footer_container">
+        <div class="footer_navbar">
+            <div class="footer_logo_block">
+                <img src="{% static 'img/logo_zoo.png' %}" alt="">
+                <p>Терриротия <span style="color: #008060;">ZOO</span></p>
+            </div>
+            <div class="footer_nav">
+                <a href="{% url 'main:main' %}">Главная</a>
+                <a href="{% url 'main:product_list' %}">Каталог</a>
+                <a href="http://127.0.0.1:8000/#discount">Акции</a>
+                <a href="{% url 'main:articles' %}">Статьи</a>
+            </div>
+        </div>
+        <hr>
+        <div class="footer_address">
+            <div class="footer_address_block">
+                <div class="f_address_wrapper">
+                    <img src="{% static 'img/navigadr.svg' %}" alt="">
+                    <p>Минск, ул. Чюрлёниса, 6.</p>
+                </div>
+                <div class="f_address_wrapper_2">
+                    <img src="{% static 'img/metroIcon.svg' %}" alt="">
+                    <p>Малиновка</p>
+                </div>
+            </div>
+            <div class="footer_phone_block">
+                <img src="{% static 'img/phoneIcon_.svg' %}" alt="">
+                <p>+ 375 (44) 501 03 55</p>
+            </div>
+            <div class="footer_work">
+                <div class="footer_work_1">
+                    <img src="{% static 'img/clock_.svg' %}" alt="">
+                    <p>Пон.-Пят. 10:00-21:00</p>
+                </div>
+                <div class="footer_work_2">
+                    <div class="work2_strip"></div>
+                    <p>Суб.-Вос. 10:00-20:00</p>
+                </div>
+            </div>
+            <div>
+               <a href="{% url 'order:call_back' %}"><p class="callback">Обратный звонок</p></a>
+            </div>
+            <hr class="footer_hr">
+        </div>
+        <div class="footer_site_info">
+            <p>© Все права защищены 2022</p>
+        </div>
+    </div>
+</div>
